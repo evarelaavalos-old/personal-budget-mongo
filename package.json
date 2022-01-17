@@ -1,5 +1,5 @@
 {
-  "name": "personal-budget-app",
+  "name": "personal-budget-mongo",
   "version": "1.0.0",
   "description": "A personal budget application using React + Node.",
   "main": "index.js",
@@ -14,13 +14,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/evarelaavalos/personal-budget-app.git"
+    "url": "git+https://github.com/evarelaavalos/personal-budget-mongo.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/evarelaavalos/personal-budget-app/issues"
+    "url": "https://github.com/evarelaavalos/personal-budget-mongo/issues"
   },
-  "homepage": "https://github.com/evarelaavalos/personal-budget-app#readme"
+  "homepage": "https://github.com/evarelaavalos/personal-budget-mongo#readme"
 }

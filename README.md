@@ -1,4 +1,4 @@
-# Personal Budget App
+# Personal Budget App with MongoDB
 
 ## Table of Contents
 
@@ -21,7 +21,7 @@ This is a project build for Alkemy following these [requirements](/docs/Challeng
 
 - **Backend**:
   - **Framework**: Is build in ***Node.js*** using the ***Express.js*** Framework.
-  - **Database**: For the data uses the ***MySQL*** database. No ORM.
+  - **Database**: For the data uses the ***MongoDB*** database.
 
 ## Usage <a id="usage"></a>
 
@@ -37,8 +37,8 @@ To make use of this project you need to have installed these programs in your sy
 #### 1. Git clone this project in your machine.
 
 ```bash
-git clone https://github.com/evarelaavalos/personal-budget-app
-cd personal-budget-app
+git clone https://github.com/evarelaavalos/personal-budget-mongo
+cd personal-budget-mongo
 ```
 #### 2. Install the dependencies.
 
