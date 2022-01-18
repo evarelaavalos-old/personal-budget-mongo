@@ -1,78 +1,70 @@
-const getConnection = require('../database/mysql');
+const transactions = require('./transactions.mongo');
+const types = require('./types.mongo');
+
+const DEFAULT_ID = 100;
+
+async function getLatestId() {
+    const latestId = await transactions.findOne({}).sort('-id');
+
+    if (!latestId) {
+        return DEFAULT_ID;
+    }
+
+    return latestId.id + 1;
+}
+
+async function upsertTransaction(transaction) {
+    const type = await types.findOne({
+        id: transaction.type,
+    })
+
+    if (!type) {
+        throw new Error('No matching type found')
+    }
+
+    return await transactions.findOneAndUpdate({
+        id: transaction.id,
+    }, transaction, {
+        upsert: true,
+    });
+}
 
 async function getAllTransactions() {
-    return new Promise(async (resolve, reject) => {
-        let connection = await getConnection();
-        connection.query('SELECT * FROM transactions', (err, rows) => {
-            !err ? resolve(rows) : reject(err)
-        });
-
-        connection.release();
+    return await transactions.find({}, {
+        '_id': 0,
+        '__v': 0,
     });
 }
 
 async function addNewTransaction(transaction) {
-    return new Promise(async (resolve, reject) => {
-        let connection = await getConnection();
-        connection.query(
-            'INSERT INTO transactions (concept, date, amount, type) '
-            + 'VALUES (?, ?, ?, ?)',
-            [
-                transaction.concept,
-                transaction.date,
-                transaction.amount,
-                transaction.type
-            ],
-            (err, result) => {
-                !err ? resolve(result) : reject(err);
-            });
+    const newTransaction = {
+        id: await getLatestId(),
+        ...transaction,
+    }
 
-        connection.release();
-    });
+    return await upsertTransaction(newTransaction);
 }
 
 async function editTransaction(id, transaction) {
-    return new Promise(async (resolve, reject) => {
-        let connection = await getConnection();
-        connection.query(
-            'UPDATE transactions SET '
-            + 'concept = ?, date = ?, amount = ? '
-            + 'WHERE id = ?;',
-            [
-                transaction.concept,
-                transaction.date,
-                transaction.amount,
-                id
-            ],
-            (err, result) => {
-                !err ? resolve(result) : reject(err);
-            });
-    
-        connection.release();
-    });
+    const updatedTransaction = {
+        id,
+        ...transaction,
+    }
+
+    return await upsertTransaction(updatedTransaction);
 }
 
 async function deleteTransaction(id) {
-    return new Promise(async (resolve, reject) => {
-        let connection = await getConnection();
-        connection.query(
-            'DELETE FROM transactions WHERE id = ?', [id], (err, result) => {
-                !err ? resolve(result.affectedRows) : reject(err);
-            });
-    
-        connection.release();
+    const queryResult = await transactions.deleteOne({
+        id,
     });
+
+    return queryResult?.deletedCount;
 }
 
 async function existsTransactionWithId(id) {
-    return new Promise(async (resolve, reject) => {
-        let connection = await getConnection();
-        connection.query('SELECT 1 FROM transactions WHERE id = ?', [id],
-        (err, result) => {
-            !err ? resolve(...result) : reject(err)
-        });
-
-        connection.release();
+    return await transactions.findOne({
+        id,
     });
 }
 
