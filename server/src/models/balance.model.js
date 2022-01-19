@@ -9,8 +9,8 @@ async function getBalance() {
                     $sum: {
                         $cond: {
                             if: { $eq: ['$type', 1] },
-                            then: { $abs: '$amount' },
-                            else: { $multiply: [{ $abs: '$amount' }, -1]},
+                            then: { $round: [{ $abs: '$amount' }, 2]},
+                            else: { $round: [{ $multiply: [{ $abs: '$amount' }, -1] }, 2]},
                         },
                     },
                 },
@@ -21,7 +21,7 @@ async function getBalance() {
     // returns: [ { '_id': null, balance: 118200.98 } ]
 
     return ({
-        balance: queryResult[0].balance,
+        balance: Number(queryResult[0].balance.toFixed(2)),
     });
 }
 

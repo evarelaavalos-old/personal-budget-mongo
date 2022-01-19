@@ -14,12 +14,14 @@ async function getLatestId() {
 }
 
 async function upsertTransaction(transaction) {
-    const type = await types.findOne({
-        id: transaction.type,
-    })
-
-    if (!type) {
-        throw new Error('No matching type found')
+    if ('type' in transaction) {
+        const type = await types.findOne({
+            id: transaction.type,
+        });
+    
+        if (!type) {
+            throw new Error('No matching type found');
+        }
     }
 
     return await transactions.findOneAndUpdate({
