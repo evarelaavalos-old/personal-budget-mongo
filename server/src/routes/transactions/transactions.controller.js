@@ -13,6 +13,7 @@ async function httpGetAllTransactions(req, res) {
         const transactions = await getAllTransactions();
         return res.status(200).json(transactions);
     } catch (err) {
+        console.error(err);
         res.status(500).json({
             error: 'Internal server error'
         });
@@ -41,6 +42,7 @@ async function httpAddNewTransaction(req, res) {
         await addNewTransaction(transaction);
         return res.status(201).json(transaction);
     } catch (err) {
+        console.error(err);
         res.status(500).json({
             error: 'Internal server error',
         });
@@ -82,6 +84,7 @@ async function httpEditTransaction(req, res) {
         await editTransaction(idTransaction, transaction);
         return res.status(200).json(transaction);
     } catch (err) {
+        console.error(err);
         res.status(500).json({
             error: 'Internal server error',
         });
@@ -116,6 +119,7 @@ async function httpDeleteTransaction(req, res) {
             ok: true,
         });
     } catch (err) {
+        console.error(err);
         res.status(500).json({
             error: 'Internal server error',
         });

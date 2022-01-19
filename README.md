@@ -6,7 +6,6 @@
 - [Usage](#usage)
   - [Prerequisites](#prerequisites)
   - [Setup](#setup)
-- [Database](#database)
 - [API Endpoints](#api)
 
 ## Overview <a id="overview"></a>
@@ -29,8 +28,7 @@ This is a project build for Alkemy following these [requirements](/docs/Challeng
 
 To make use of this project you need to have installed these programs in your system:
 
-1. [MySql Community](https://dev.mysql.com/downloads/)
-2. [Node.js](https://nodejs.org/en/)
+1. [Node.js](https://nodejs.org/en/)
 
 ### Setup <a id="setup"></a>
 
@@ -47,11 +45,7 @@ cd personal-budget-mongo
 npm install
 ```
 
-#### 3. Run the `initdb.sql` file in MySQL.
-
-Located in the folder `./server/src/database/`.
-
-#### 4. Create a `.env` file in the `/server` directory of your project.
+#### 3. Create a `.env` file in the `/server` directory of your project.
 
 Copy paste the following example into the file:
 
@@ -61,33 +55,23 @@ Copy paste the following example into the file:
 # Add environment-specific variables on new lines in the form of NAME=VALUE
 #
 HOST=8000
-MYSQL_HOST=localhost
-MYSQL_USER=root
-MYSQL_PASSWORD=s1mpl3
-MYSQL_PORT=3306
+MONGO_URL=mongodb+srv://mongo-app:...
 ```
 
 The `HOST` variable is optional. By default its value is `8000`.
 
 Set the variables with the data of your own database:
 
-- `MYSQL_HOST`: The hostname of the database you are connecting to. (Default: `localhost`)
-- `MYSQL_USER`: The MySQL user to authenticate as. (Default: `root`)
-- `MYSQL_PASSWORD` (**required**): The password of that MySQL user.
-- `MYSQL_PORT`: The port number to connect to. (Default: `3306`)
+- `MONGO_URL` (**required**): The connection string provided by MongoDB Atlas Database.
 
-#### 5. Run the server.
+#### 4. Run the server.
 
 ```bash
 # In the root directory of the project
 npm run deploy
 ```
 
-#### 6. Open the browser on the assigned port: `http://localhost:8000`
-
-## Database <a id="database"></a>
-
-![diagram of the database](docs/database.jpg)
+#### 5. Open the browser on the assigned port: `http://localhost:8000`
 
 ## API Endpoints <a id="api"></a>
 
